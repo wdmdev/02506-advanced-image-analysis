@@ -1,17 +1,23 @@
 import numpy as np
 from scipy.ndimage import convolve
 
-def gaussian_1d(x, sigma):
+def gaussian_1d(sigma, size=5):
     '''
     Analytical 1D Gaussian kernel
     '''
+    s = np.ceil(np.max([sigma*size, size]))
+    x = np.arange(-s,s+1)
+    x = x.reshape(x.shape + (1,))
     return 1/(sigma*np.sqrt(2*np.pi)) * np.exp(-x**2/(2*sigma**2))
 
 
-def dgaussian_1d(x, sigma):
+def dgaussian_1d(sigma, size=5):
     '''
     Analytical 1st order derivative of Gaussian kernel
     '''
+    s = np.ceil(np.max([sigma*size, size]))
+    x = np.arange(-s,s+1)
+    x = x.reshape(x.shape + (1,))
     return -x/(sigma**3 * np.sqrt(2*np.pi)) * np.exp(-x**2/(2*sigma**2))
 
 def gaussian_2d(x, y, sigma):

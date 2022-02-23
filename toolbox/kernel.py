@@ -26,6 +26,19 @@ def dgaussian_1d(sigma, size=5):
     x = x.reshape(x.shape + (1,))
     return -x/(sigma**3 * np.sqrt(2*np.pi)) * np.exp(-x**2/(2*sigma**2))
 
+def ddgaussian_1d(sigma,size=5):
+    '''
+    Analytical 2nd order derivative of Gaussian kernel
+
+    :param sigma:   Standard deviation
+    :param size:    Kernel size
+    '''
+    s = np.ceil(np.max([sigma*size, size]))
+    x = np.arange(-s,s+1)
+    x = x.reshape(x.shape + (1,))
+    return (np.exp(-x**2/(2*sigma**2)*(x-sigma)*(x+sigma)))/(np.sqrt(2*np.pi)*sigma**5)
+
+
 def gaussian_2d(x, y, sigma):
     '''
     Analytical 2D Gaussian kernel

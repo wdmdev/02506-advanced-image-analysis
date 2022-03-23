@@ -14,3 +14,4 @@ dependencies:
     - opencv-python==4.5.5.62
     - tqdm==4.62.3
     - scikit-learn==1.0.2
+    - PyMaxflow==1.2.13

@@ -5,13 +5,13 @@ import skimage.io
 import slgbuilder
 
 #%% input
-I = skimage.io.imread(os.path.join('data', 'layers_A.png')).astype(np.int32)
+I = skimage.io.imread(os.path.join('exercises', 'week7', 'data', 'layers_A.png')).astype(np.int32)
 
 fig, ax = plt.subplots(1,4)
 ax[0].imshow(I, cmap='gray')
 ax[0].set_title('input image')
 
-#%% one line
+#%% one line not very smooth
 delta = 3
 
 layer = slgbuilder.GraphObject(I)
@@ -29,7 +29,7 @@ ax[1].plot(segmentation_line, 'r')
 ax[1].set_title(f'delta = {delta}')
 
 
-#%% a smoother line
+#%% a single smoother line
 delta = 1
 
 layer = slgbuilder.GraphObject(I)
@@ -65,3 +65,5 @@ ax[3].imshow(I, cmap='gray')
 for line in segmentation_lines:
     ax[3].plot(line, 'r')
 ax[3].set_title('two dark lines')
+
+plt.show()

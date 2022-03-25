@@ -16,3 +16,4 @@ dependencies:
     - scikit-learn==1.0.2
     - PyMaxflow==1.2.13
     - imageio-ffmpeg==0.4.5
+    - slgbuilder==0.1.2

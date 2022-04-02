@@ -9,64 +9,54 @@ class ThreeHiddenDNN():
         self.W1 = np.random.randn(3,3)*(1/np.sqrt(3))
         self.W2 = np.random.randn(4,2)*(1/np.sqrt(4))
 
-    def backpropagation(self, x, y_pred, y_true, i):
+    def backpropagation(self, X, Y, T):
         '''
         Backpropagation function for updating network weights
         according to predictions and actual target labels.
 
-        :param x:           The data to classify
-        :param y_pred:      The predicted labels
-        :param y_true:      The true labels of the given X data
-        :param i:           Current row in X data
+        :param X:      The data to classify
+        :param Y:      The predicted labels
+        :param T:      The true labels of the given X data
         '''
 
         # Update values for weights[1]
-        delta_2 = y_pred-y_true
-        h = self.h[i]
-        # Partial derivatives for updating weights[1]
-        Q1 = np.outer(np.append(h,1).T, delta_2)
-
+        delta_2 = Y-T
+        # Update values for weights[1]
+        dW2 = np.outer(np.c_[self.h, np.ones((self.h.shape[0],1))].T, delta_2)
+        dW2 = np.sum(dW2.diagonal().reshape((X.shape[0], -1)), axis=0)
         # Derivatives of activation
-        a_prime = (h > 0).astype(int).T
-        # Weights without bias row (last row)
-        W_hat = self.W2[:-1]
-        W_hat[:,0] = a_prime * W_hat[:,0]
-        W_hat[:,1] = a_prime * W_hat[:,1]
-        W_hat = (1./x.shape[0])*W_hat
-        
-        # Update values for weights[0]
-        delta_1 = W_hat @ delta_2.T
-        # Partial derivatives for updating weights[0]
-        Q0 = np.outer(np.append(x, 1).T, delta_1)
+        a_prime = (self.h > 0).astype(int).T
 
-        self.W1 -= self.step_size*Q0
-        self.W2 -= self.step_size*Q1
+        # Weights without bias row (last row)
+        W2_hat = self.W2[:-1]
+        
+        delta_1 = a_prime * (W2_hat @ delta_2.T)
+        # Update values for weights[0]
+        dW1 = np.outer(np.c_[X, np.ones((X.shape[0],1))].T, delta_1)
+        dW1 = np.sum(dW1.diagonal().reshape((X.shape[0], -1)), axis=0)
+
+        self.W1 -= self.step_size*dW1
+        self.W2 -= self.step_size*dW2
 
     def softmax(self, y_hat):
-        '''
-            Softmax to perform classification
-        '''
         y_hat_exp = np.exp(y_hat)
-        y_hat_sum = np.sum(y_hat, axis=1)
-        y_hat_sum = np.reshape(y_hat_sum, (y_hat_sum.shape[0],1))
-        y_hat_softmax = y_hat_exp/y_hat_sum
-        return y_hat_softmax
+        return y_hat_exp/np.sum(y_hat_exp, axis=1, keepdims=True)
 
-    def forward(self, x):
+    def forward(self, X):
         ''' 
         Forward function for making classifications.
         Node values between input and hidden layer 
         We don't need to store z because we can use h
         for the backpropagation since we use ReLU activation function
 
-        :param x:   The data to classify
+        :param X:   The data to classify
 
         :returns:   The predicted labels
         '''
-        z = np.c_[x, np.ones((x.shape[0],1))]@self.W1
+        z = np.c_[X, np.ones((X.shape[0],1))]@self.W1
         # Node values between hidden layer and output, ReLU
         self.h = np.maximum(z, 0)
-        y_hat = np.c_[self.h, np.ones((x.shape[0],1))]@self.W2
+        y_hat = np.c_[self.h, np.ones((X.shape[0],1))]@self.W2
         # Using subtraction of np.max to avoid overflow, Goodfellow: Deep Learning page 81
         max_y_hat = np.max(y_hat, axis=1, keepdims=True)
         new_y_hat = y_hat-max_y_hat

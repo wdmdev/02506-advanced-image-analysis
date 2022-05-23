@@ -5,3 +5,5 @@ scikit-image==0.19.1
 opencv-python==4.5.5.62
 tqdm==4.62.3
 scikit-learn==1.0.2
+imageio-ffmpeg==0.4.5
+slgbuilder==0.1.2

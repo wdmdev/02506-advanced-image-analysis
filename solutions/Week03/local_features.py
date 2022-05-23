@@ -104,12 +104,13 @@ def ndim2col(im, block_size=[3,3], stepsize=1):
         return patches
 
 #%%
+import os
 import skimage.io
 import matplotlib.pyplot as plt
 
 if __name__ == '__main__':
     
-    filename = 'training_image.png'
+    filename = os.path.join('..','Data', 'week3', '3labels', 'training_image.png')
     I = skimage.io.imread(filename)
     I = I.astype(np.float)
     
@@ -136,6 +137,8 @@ if __name__ == '__main__':
         for i in range(3):
             ax[i][j].imshow(pf[3*i+j], cmap='jet')
             ax[i][j].set_title(f'layer {3*i+j}')
+    
+    plt.show()
    
     
 

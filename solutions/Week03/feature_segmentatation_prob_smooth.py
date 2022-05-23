@@ -3,6 +3,7 @@ Vedrana Andersen Dahl (vand@dtu.dk)
 Anders Bjorholm Dahl (abda@dtu.dk)
 """
 
+import os
 import skimage.io
 import numpy as np
 import matplotlib.pyplot as plt
@@ -15,12 +16,12 @@ def ind2labels(ind):
     """ Helper function for transforming uint8 image into labeled image."""
     return np.unique(ind, return_inverse=True)[1].reshape(ind.shape)
 
-path = '../../../../Data/week3/3labels/' # Change path to your directory
+path = os.path.join('..', 'Data', 'week3', '3labels') # Change path to your directory
 
 #%% READ IN IMAGES
-training_image = skimage.io.imread(path + 'training_image.png')
+training_image = skimage.io.imread(os.path.join(path, 'training_image.png'))
 training_image = training_image.astype(np.float)
-training_labels = skimage.io.imread(path + 'training_labels.png')
+training_labels = skimage.io.imread(os.path.join(path, 'training_labels.png'))
 
 training_labels = ind2labels(training_labels)
 nr_labels = np.max(training_labels)+1 # number of labels in the training image
@@ -59,6 +60,7 @@ for l in range(nr_labels):
     hist[:,l] = np.histogram(assignment[labels_subset==l],bins=edges)[0]
 sum_hist = np.sum(hist,axis=1)
 cluster_probabilities = hist/(sum_hist.reshape(-1,1))
+print(cluster_probabilities)
 
 fig, ax = plt.subplots(1,2)
 legend_label = [f'label {x}' for x in range(nr_labels)]
@@ -73,11 +75,12 @@ ax[1].set_xlabel('cluster id')
 ax[1].set_ylabel('label probability for cluster')
 ax[1].legend(legend_label)
 ax[1].set_title('cluster probabilities')
+plt.show()
 
 # Finished training
 
 #%% USING THE MODEL
-testing_image = skimage.io.imread(path + 'testing_image.png')
+testing_image = skimage.io.imread(os.path.join(path, 'testing_image.png'))
 testing_image = testing_image.astype(np.float)
 
 features_testing = lf.get_gauss_feat_multi(testing_image, sigma)
@@ -100,6 +103,7 @@ ax[0].imshow(testing_image, cmap=plt.cm.gray)
 ax[0].set_title('testing image')
 ax[1].imshow(P_rgb)
 ax[1].set_title('probabilities for testing image as RGB')
+plt.show()
 
 #%% SMOOTH PROBABILITY MAP
 
@@ -132,7 +136,7 @@ ax[1][0].imshow(P_rgb_smooth[:,:,0])
 ax[1][1].imshow(P_rgb_smooth[:,:,1])
 ax[1][2].imshow(P_rgb_smooth[:,:,2])
 ax[1][3].imshow(P_rgb_smooth_max)
-
+plt.show()
 
 
 

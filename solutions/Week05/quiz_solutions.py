@@ -25,8 +25,8 @@ print(f'likelihood_stripes {likelihood_stripes}')
 
 #%% C
 S_MAP = np.array([[0, 0, 1, 1, 2, 2],
-                  [0, 0, 1, 1, 1, 1],
-                  [0, 0, 1, 1, 1, 1]])
+                  [0, 0, 1, 1, 2, 2],
+                  [0, 0, 1, 1, 2, 2]])
 posterior_small  = prior_energy(S_MAP, beta) + likelihood_energy(S_MAP, I, mu)
 print(f'posterior_small {posterior_small}')
 

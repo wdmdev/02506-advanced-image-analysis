@@ -28,6 +28,7 @@ fig, ax = plt.subplots()
 ax.imshow(I)
 ax.plot(segmentation_line, 'r')
 ax.set_title(f'cost={c}')
+plt.show()
 
 #%% JUST CHECKING
 fig, ax = plt.subplots(2,3)
@@ -56,5 +57,4 @@ for i in range(5):
 
 fig.delaxes(ax[5])
 
-
-
+plt.show()

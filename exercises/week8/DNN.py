@@ -63,3 +63,7 @@ class ThreeHiddenDNN():
         y = self.softmax(new_y_hat)
 
         return y
+
+    def cross_entropy(y,y_pre):
+        loss=-np.sum(y*np.log(y_pre))
+        return loss/float(y_pre.shape[0])

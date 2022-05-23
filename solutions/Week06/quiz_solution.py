@@ -1,19 +1,21 @@
+import os
 import skimage.io
 import numpy as np
 import matplotlib.pyplot as plt
 import simple_snake as sis
-import skimage.draw
+import skimage
 
 a = (40+10*1)**2*np.pi
 print(a)
 
-filename = '../../../../Data/week6/plusplus.png'
+dirname = os.path.abspath(os.path.dirname(__file__))
+filename = os.path.join(dirname, '..', 'Data', 'week6', 'data', 'plusplus.png')
 I = skimage.io.imread(filename).astype(np.float)
 I = np.mean(I,axis=2)/255
 
 snake = sis.make_circular_snake(200, np.array(I.shape)/2, 180)
 
-mask = skimage.draw.polygon2mask(I.shape, snake.T)
+mask = skimage.draw.polygon2mask(I.shape, snake.T).astype(bool)
 m = np.array([np.mean(I[~mask]), np.mean(I[mask])])
 
 b = m[1]

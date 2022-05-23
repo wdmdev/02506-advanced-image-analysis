@@ -6,14 +6,15 @@ Created on Tue Feb  9 23:07:36 2021
 @author: vand
 """
 
+import os
 import numpy as np
 import scipy.ndimage
 import skimage.io
 import matplotlib.pyplot as plt
 
 #%% QUESTION 1
-I_noisy = skimage.io.imread('../../../../Data/week1/noisy_number.png').astype(np.float)
-sigma = 15;
+I_noisy = skimage.io.imread(os.path.join('..', 'Data', 'week1', 'noisy_number.png')).astype(np.float)
+sigma = 15
 I_smoothed = scipy.ndimage.gaussian_filter(I_noisy, sigma, mode='nearest')
 
 fig, ax = plt.subplots(1,2)
@@ -30,13 +31,13 @@ def boundary_length(S):
 fig, ax = plt.subplots(1,3)
 for i in range(3):
     name = f'fuel_cell_{i+1}.tif'
-    I = skimage.io.imread('../../../../Data/week1/fuel_cells/' + name)
+    I = skimage.io.imread(os.path.join('..', 'Data', 'week1', 'fuel_cells', name))
     L = boundary_length(I)
     ax[i].imshow(I)
     ax[i].set_title(f'{name}\nL = {L}')
 
 #%% QUESTION 3
-X_noisy = np.loadtxt('../../../../Data/week1/curves/' + 'dino_noisy.txt')
+X_noisy = np.loadtxt(os.path.join('..', 'Data', 'week1', 'curves', 'dino_noisy.txt'))
 N = X_noisy.shape[0]
 
 def curve_length(X):

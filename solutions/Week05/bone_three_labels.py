@@ -1,3 +1,4 @@
+import os
 import skimage.io
 import matplotlib.pyplot as plt
 import maxflow.fastmin
@@ -16,8 +17,9 @@ def segmentation_histogram(ax, I, S, edges=None):
 
 
 #%% Inspect the image and the histogram
-path = '../../../../Data/week5/'
-I = skimage.io.imread(path + 'V12_10X_x502.png').astype(float)/(2**16-1)
+file_path = os.path.abspath(os.path.dirname(__file__))
+path = os.path.join(file_path, '..', 'Data', 'week5') # Replace with your own path
+I = skimage.io.imread(os.path.join(path, 'V12_10X_x502.png')).astype(float)/(2**16-1)
 fig, ax = plt.subplots()
 ax.imshow(I, cmap=plt.cm.gray)
 
@@ -55,4 +57,4 @@ ax.set_xlabel('pixel values')
 ax.set_ylabel('count')
 ax.set_title('segmentation histogram')
 
-
+plt.show()

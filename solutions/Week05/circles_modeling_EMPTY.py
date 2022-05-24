@@ -1,3 +1,4 @@
+import os
 import skimage.io
 import numpy as np
 import scipy.ndimage
@@ -27,11 +28,12 @@ def segmentation_histogram(ax, I, S, edges=None):
         ax.plot(centers, np.histogram(I[S==k].ravel(), edges)[0])
         
 
-path = '../../../../Data/week5/'
-I = skimage.io.imread(path + 'noisy_circles.png').astype(np.float)
+file_path = os.path.abspath(os.path.dirname(__file__))
+path = os.path.join(file_path, '..', 'Data', 'week5') # Replace with your own path
+I = skimage.io.imread(os.path.join(path, 'noisy_circles.png')).astype(np.float)
 
 segmentations = [] # list where I'll place different segmentations
-GT = skimage.io.imread(path + 'noise_free_circles.png')
+GT = skimage.io.imread(os.path.join(path, 'noise_free_circles.png'))
 
 (mu, S_gt) = np.unique(GT, return_inverse=True)
 S_gt = S_gt.reshape(I.shape)
@@ -73,5 +75,6 @@ for i in range(N):
     ax[2][i].imshow(err, vmin=-2, vmax=2, cmap=plt.cm.bwr)
     ax[2][i].set_title(f'error: {(err>0).sum()}')
     
-    
+
+plt.show() 
     

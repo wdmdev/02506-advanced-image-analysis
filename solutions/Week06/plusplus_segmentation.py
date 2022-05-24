@@ -1,9 +1,11 @@
+import os
 import skimage.io
 import numpy as np
 import matplotlib.pyplot as plt
 import simple_snake as sis
 
-filename = '../../../../Data/week6/plusplus.png'
+file_path = os.path.abspath(os.path.dirname(__file__))
+filename = os.path.join(file_path, '..', 'Data', 'week6', 'data', 'plusplus.png') # Replace with your own path
 I = skimage.io.imread(filename).astype(np.float)
 I = np.mean(I,axis=2)/255
 
@@ -33,7 +35,7 @@ for i in range(nr_iter):
     plt.pause(0.001)
 
       
-
+plt.show()
 
 
 

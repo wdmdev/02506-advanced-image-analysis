@@ -88,7 +88,7 @@ if __name__ == "__main__":
     plt.title('Zero mean training')
     fig.show
 
-
+    plt.show()
 
 
 

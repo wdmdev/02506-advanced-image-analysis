@@ -8,6 +8,7 @@ Created on Thu Feb  6 23:26:02 2020
 
 # Computing length of segmentation boundary, exercise 1.1.2
 
+import os
 import skimage.io
 import numpy as np
 import matplotlib.pyplot as plt
@@ -19,14 +20,14 @@ def boundary_length(S):
     return L
 
 fig, ax = plt.subplots(1,3)
-path = '../../../../Data/week1/fuel_cells/'
+file_path = os.path.abspath(os.path.dirname(__file__))
+path = os.path.join(file_path, '..', 'Data', 'week1', 'fuel_cells')
 
 for i in range(3):
-    I = skimage.io.imread(f'{path}fuel_cell_{i+1}.tif')
+    I = skimage.io.imread(os.path.join(path, f'fuel_cell_{i+1}.tif'))
     L = boundary_length(I)
     ax[i].imshow(I)
     ax[i].set_title(f'L={L}')
 
 
-
-
+plt.show()

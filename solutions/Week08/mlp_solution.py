@@ -188,7 +188,7 @@ ax.plot(X[n:,0],X[n:,1],'g.',markersize=10,alpha=0.3)
 ax.set_aspect('equal')
 
 
-
+plt.show()
 
 
 

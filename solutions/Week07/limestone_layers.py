@@ -1,10 +1,13 @@
+import os
 import numpy as np 
 import matplotlib.pyplot as plt
 import skimage.io 
 import slgbuilder
 
 
-RGB = skimage.io.imread('../../../../Data/week7/rammed-earth-layers-limestone.jpg').astype(np.int32)
+file_path = os.path.abspath(os.path.dirname(__file__))
+filename = os.path.join(file_path, '..', 'Data', 'week7', 'rammed-earth-layers-limestone.jpg') # Replace with your own path
+RGB = skimage.io.imread(filename).astype(np.int32)
 
 fig, ax = plt.subplots(2,2)
 ax[0,0].imshow(RGB)
@@ -64,3 +67,5 @@ ax[1,1].imshow(RGB)
 for line in segmentation_lines:
     ax[1,1].plot(line, 'r')
 ax[1,1].set_title('Dark region')
+
+plt.show()

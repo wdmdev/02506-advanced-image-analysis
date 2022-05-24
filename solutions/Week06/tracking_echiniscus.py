@@ -1,9 +1,11 @@
+import os
 import imageio
 import numpy as np
 import matplotlib.pyplot as plt
 import simple_snake as sis
 
-filename = '../../../../Data/week6/echiniscus.mp4';
+file_path = os.path.abspath(os.path.dirname(__file__))
+filename = os.path.join(file_path, '..', 'Data', 'week6', 'data', 'echiniscus.mp4') # Replace with your own path
 vid = imageio.get_reader(filename)
 movie = np.array([im for im in vid.iter_data()], dtype=np.float)/255
 gray = (2*movie[:,:,:,2] - movie[:,:,:,1]- movie[:,:,:,0]+2)/4
@@ -49,6 +51,6 @@ for i in range(0,300):
 
 
 
-
+plt.show()
 
 

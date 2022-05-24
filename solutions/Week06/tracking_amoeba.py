@@ -1,9 +1,11 @@
+import os
 import imageio
 import numpy as np
 import matplotlib.pyplot as plt
 import simple_snake as sis
 
-filename = '../../../../Data/week6/crawling_amoeba.mov'
+file_path = os.path.abspath(os.path.dirname(__file__))
+filename = os.path.join(file_path, '..', 'Data', 'week6', 'data', 'crawling_amoeba.mov') # Replace with your own path
 vid = imageio.get_reader(filename)
 movie = np.array([im for im in vid.iter_data()], dtype=np.float)/255
 movie = np.mean(movie, axis=3)
@@ -45,6 +47,4 @@ for i in range(0,500):
 
 
 
-
-
-
+plt.show()

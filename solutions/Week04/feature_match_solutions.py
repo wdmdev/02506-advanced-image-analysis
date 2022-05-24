@@ -4,6 +4,7 @@ Anders Bjorholm Dahl, abda@dtu.dk
 Script to match images based on SIFT features.
 """
 
+import os
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
@@ -11,10 +12,11 @@ import scipy.ndimage
 import transform
 
 #%% Read two images to test the matching properties (default from documentation)
-path = '../../../course-material/Data/week4/' # Replace with your own path
+file_path = os.path.abspath(os.path.dirname(__file__))
+path = os.path.join(file_path, '..', 'Data', 'week4') # Replace with your own path
 
-im1 = cv2.imread(path + 'CT_lab_high_res.png',cv2.IMREAD_GRAYSCALE) # queryImage
-im2 = cv2.imread(path + 'CT_lab_low_res.png',cv2.IMREAD_GRAYSCALE) # trainImage
+im1 = cv2.imread(os.path.join(path, 'CT_lab_high_res.png'),cv2.IMREAD_GRAYSCALE) # queryImage
+im2 = cv2.imread(os.path.join(path, 'CT_lab_low_res.png'),cv2.IMREAD_GRAYSCALE)# trainImage
 
 # Initiate SIFT detector
 sift = cv2.SIFT_create()
@@ -147,8 +149,8 @@ import blob
 
 #%% Compute the transformation of detected fibers in one image to the other
 
-im1 = cv2.imread(path + 'CT_lab_high_res.png',cv2.IMREAD_GRAYSCALE) # queryImage
-im2 = cv2.imread(path + 'CT_lab_med_res.png',cv2.IMREAD_GRAYSCALE) # trainImage
+im1 = cv2.imread(os.path.join(path, 'CT_lab_high_res.png'),cv2.IMREAD_GRAYSCALE) # queryImage
+im2 = cv2.imread(os.path.join(path, 'CT_lab_med_res.png'),cv2.IMREAD_GRAYSCALE)# trainImage
 
 pts_im1, pts_im2 = match_SIFT(im1, im2, 0.6)
 plot_matching_keypoints(im1,im2,pts_im1, pts_im2)
@@ -278,3 +280,4 @@ ax.bar((h2[1][1:]+h2[1][:-1])/2,h2[0], width = h2[1][1]-h2[1][0],color='b',alpha
 ax.plot((h2[1][1:]+h2[1][:-1])/2,h2[0],'b')
 ax.legend(('CT large','CT medium to large'))
 
+plt.show()

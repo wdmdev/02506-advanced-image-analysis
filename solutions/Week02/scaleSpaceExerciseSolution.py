@@ -5,6 +5,7 @@ Anders Bjorholm Dahl
 abda@dtu.dk
 """
 
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 import skimage.io
@@ -13,9 +14,10 @@ import cv2
 
 #%% Computing Gaussian and its second order derivative
 
-data_path = '../../../../Data/week2/' # replace with your own data path
+file_path = os.path.abspath(os.path.dirname(__file__))
+data_path = os.path.join(file_path, '..', 'Data', 'week2')
 
-im = skimage.io.imread(data_path + 'test_blob_uniform.png').astype(np.float)
+im = skimage.io.imread(os.path.join(data_path, 'test_blob_uniform.png')).astype(np.float)
 
 fig, ax = plt.subplots(1,1,figsize=(10,10),sharex=True,sharey=True)
 ax.imshow(im,cmap='gray')
@@ -71,7 +73,7 @@ ax.imshow(Lg,cmap='gray')
 
 #%% Detecting blobs on one scale
 
-im = skimage.io.imread(data_path + 'test_blob_uniform.png').astype(np.float)
+im = skimage.io.imread(os.path.join(data_path, 'test_blob_uniform.png')).astype(np.float)
 
 Lxx = cv2.filter2D(cv2.filter2D(im, -1, g), -1, ddg.T)
 Lyy = cv2.filter2D(cv2.filter2D(im, -1, ddg), -1, g.T)
@@ -111,7 +113,7 @@ plt.plot(circ_x, circ_y, 'r')
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # Detecting blobs on multiple scales
 
-im = skimage.io.imread(data_path + 'test_blob_varying.png').astype(np.float)
+im = skimage.io.imread(os.path.join(data_path, 'test_blob_varying.png')).astype(np.float)
 
 t = 15
 g, dg, ddg, dddg = getGaussDerivative(t)
@@ -158,7 +160,7 @@ d = np.arange(10, 24.5, step = 0.4)
 tStep = np.sqrt(0.5)*((d/2)**2) # convert to scale
 
 # read image and take out a small part
-im = skimage.io.imread(data_path + 'SEM.png').astype(np.float)
+im = skimage.io.imread(os.path.join(data_path, 'SEM.png')).astype(np.float)
 im = im[200:500,200:500]
 
 fig, ax = plt.subplots(1,1,figsize=(10,10),sharex=True,sharey=True)
@@ -221,7 +223,7 @@ plt.plot(circ_x, circ_y, 'r')
 # Localize blobs - Example high resolution lab X-ray CT - find the coordinates 
 # using Gaussian smoothing and use the scale space to find the scale 
 
-im = skimage.io.imread(data_path + 'CT_lab_high_res.png').astype(np.float)/255
+im = skimage.io.imread(os.path.join(data_path, 'CT_lab_high_res.png')).astype(np.float)/255
 
 fig, ax = plt.subplots(1,1,figsize=(10,10),sharex=True,sharey=True)
 ax.imshow(im, cmap='gray')
@@ -302,28 +304,4 @@ ax.imshow(im, cmap='gray')
 ax.plot(coord[:,1], coord[:,0], 'r.')
 circ_x, circ_y = getCircles(coord, scale)
 plt.plot(circ_x, circ_y, 'r')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+plt.show()

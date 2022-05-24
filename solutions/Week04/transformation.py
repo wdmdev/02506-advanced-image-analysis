@@ -153,4 +153,4 @@ ax.plot(qn[0,idx],qn[1,idx],'c.',markersize=8)
 ax.plot(np.c_[p[0],qn[0]].T,np.c_[p[1],qn[1]].T,'g',linewidth=0.8)
 ax.set_aspect('equal')
 
-
+plt.show()

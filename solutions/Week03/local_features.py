@@ -110,7 +110,8 @@ import matplotlib.pyplot as plt
 
 if __name__ == '__main__':
     
-    filename = os.path.join('..','Data', 'week3', '3labels', 'training_image.png')
+    file_path = os.path.abspath(os.path.dirname(__file__))
+    filename = os.path.join(file_path, '..','Data', 'week3', '3labels', 'training_image.png')
     I = skimage.io.imread(filename)
     I = I.astype(np.float)
     

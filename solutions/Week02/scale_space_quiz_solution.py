@@ -5,6 +5,7 @@ Anders Bjorholm Dahl
 abda@dtu.dk
 """
 
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 import skimage.io
@@ -13,7 +14,8 @@ import cv2
 
 #%% Computing Gaussian and its second order derivative
 
-data_path = '../../../../Data/week2/' # replace with your own data path
+file_path = os.path.abspath(os.path.dirname(__file__))
+data_path = os.path.join(file_path, '..', 'Data', 'week2')
 
 def getGaussDerivative(t):
     '''
@@ -51,7 +53,7 @@ def getGaussDerivative(t):
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # Detecting blobs on multiple scales
 
-im = skimage.io.imread(data_path + 'test_blob_varying.png').astype(np.float)
+im = skimage.io.imread(os.path.join(data_path, 'test_blob_varying.png')).astype(float)
 
 t = 4
 g, dg, ddg, dddg = getGaussDerivative(t)
@@ -96,8 +98,9 @@ ax.plot(coord[:,1], coord[:,0], '.r')
 ax.set_title(f'Mean radius {mean_radius:0.2f} pixels')
 plt.plot(circ_x, circ_y, 'r')
 
+plt.show()
 
-fig.savefig('Result_test_blob_varying.pdf')
+# fig.savefig('Result_test_blob_varying.pdf')
 
 
 
@@ -110,11 +113,12 @@ d = np.arange(10, 24.5, step = 0.4)
 tStep = np.sqrt(0.5)*((d/2)**2) # convert to scale
 
 # read image and take out a small part
-im = skimage.io.imread(data_path + 'CT_lab_high_res.png').astype(np.float)
+im = skimage.io.imread(os.path.join(data_path, 'CT_lab_high_res.png')).astype(float)
 # im = im[200:500,200:500]
 
 fig, ax = plt.subplots(1,1,figsize=(10,10),sharex=True,sharey=True)
 ax.imshow(im)
+plt.show()
 
 #%% Compute scale space
 
@@ -168,15 +172,17 @@ fig, ax = plt.subplots(1,1,figsize=(10,10),sharex=True,sharey=True)
 ax.imshow(im)
 plt.plot(coord[:,1], coord[:,0], '.r')
 plt.plot(circ_x, circ_y, 'r')
+plt.show()
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # Localize blobs - Example high resolution lab X-ray CT - find the coordinates 
 # using Gaussian smoothing and use the scale space to find the scale 
 
-im = skimage.io.imread(data_path + 'CT_lab_high_res.png').astype(np.float)/255
+im = skimage.io.imread(os.path.join(data_path, 'CT_lab_high_res.png')).astype(float)/255
 
 fig, ax = plt.subplots(1,1,figsize=(10,10),sharex=True,sharey=True)
 ax.imshow(im)
+plt.show()
 
 # %% Set parameters
 def detectFibers(im, diameterLimit, stepSize, tCenter, thresMagnitude):
@@ -253,23 +259,11 @@ mean_radius = np.mean(np.sqrt(2*scale))
 # Plot detected fibres
 fig, ax = plt.subplots(1,1,figsize=(8,8),sharex=True,sharey=True)
 ax.imshow(im, cmap='gray')
+plt.show()
 ax.plot(coord[:,1], coord[:,0], 'r.', markersize = 2)
 ax.set_title(f'Mean radius {mean_radius:0.2f} pixels, number of fibers {scale.shape[0]}')
 circ_x, circ_y = getCircles(coord, scale)
 ax.plot(circ_x, circ_y, 'r', linewidth=0.8)
+plt.show()
 
-fig.savefig('Result_CT_lab_high_res.pdf')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# fig.savefig('Result_CT_lab_high_res.pdf')

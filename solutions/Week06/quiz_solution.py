@@ -8,8 +8,8 @@ import skimage
 a = (40+10*1)**2*np.pi
 print(a)
 
-dirname = os.path.abspath(os.path.dirname(__file__))
-filename = os.path.join(dirname, '..', 'Data', 'week6', 'data', 'plusplus.png')
+file_path = os.path.abspath(os.path.dirname(__file__))
+filename = os.path.join(file_path, '..', 'Data', 'week6', 'data', 'plusplus.png') # Replace with your own path
 I = skimage.io.imread(filename).astype(np.float)
 I = np.mean(I,axis=2)/255
 
@@ -38,5 +38,5 @@ ax[2].imshow(e, cmap=plt.cm.gray)
 ax[2].set_title(f'external_energy = {c:0.1f}')
 
 
-
+plt.show()
 

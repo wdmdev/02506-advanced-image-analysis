@@ -16,7 +16,8 @@ def ind2labels(ind):
     """ Helper function for transforming uint8 image into labeled image."""
     return np.unique(ind, return_inverse=True)[1].reshape(ind.shape)
 
-path = os.path.join('..', 'Data', 'week3', '3labels') # Change path to your directory
+file_path = os.path.abspath(os.path.dirname(__file__))
+path = os.path.join(file_path, '..', 'Data', 'week3', '3labels') # Change path to your directory
 
 #%% READ IN IMAGES
 training_image = skimage.io.imread(os.path.join(path, 'training_image.png'))

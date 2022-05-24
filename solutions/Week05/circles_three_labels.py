@@ -6,15 +6,17 @@ Created on Mon Mar  1 01:25:23 2021
 @author: vand
 """
 
+import os
 import skimage.io
 import numpy as np
 import matplotlib.pyplot as plt
 import maxflow.fastmin
 
 #%%
-path = '../../../../Data/week5/'
-GT = skimage.io.imread(path + 'noise_free_circles.png') # ground truth
-I = skimage.io.imread(path + 'noisy_circles.png')
+file_path = os.path.abspath(os.path.dirname(__file__))
+path = os.path.join(file_path, '..', 'Data', 'week5') # Replace with your own path
+GT = skimage.io.imread(os.path.join(path, 'noise_free_circles.png')) # ground truth
+I = skimage.io.imread(os.path.join(path, 'noisy_circles.png'))
 mu = np.unique(GT) # instead of estimating
 
 # converting all to float
@@ -45,3 +47,4 @@ ax[2].set_title('max likelihood')
 ax[3].imshow(D, vmin=0, vmax=1, cmap=plt.cm.gray)
 ax[3].set_title('max posterior')
 
+plt.show()

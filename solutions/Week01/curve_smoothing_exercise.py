@@ -8,6 +8,7 @@ Created on Thu Feb  6 23:26:02 2020
 
 # Curve smoothing, exercise 1.1.3
 
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.linalg
@@ -28,10 +29,11 @@ def regularization_matrix_version2(N, alpha, beta):
     return(scipy.linalg.inv(np.eye(N)-A))
 
 
-path = '../../../../Data/week1/curves/'
+file_path = os.path.abspath(os.path.dirname(__file__))
+path = os.path.join(file_path, '..', 'Data', 'week1', 'curves')
 
-X_smooth = np.loadtxt(path + 'dino.txt')
-X_noisy = np.loadtxt(path + 'dino_noisy.txt')
+X_smooth = np.loadtxt(os.path.join(path, 'dino.txt'))
+X_noisy = np.loadtxt(os.path.join(path, 'dino_noisy.txt'))
 N = X_noisy.shape[0]
 
 closed_ind = np.r_[np.arange(N),0] # for easy plotting a closed snake
@@ -64,6 +66,8 @@ ax.plot(smoothed_many[closed_ind,0],smoothed_many[closed_ind,1],'c')
 ax.legend((f'explicit 1 iteration lambda {lambda_small}',f'explicit 1 iteration lambda {lambda_big}',
            f'explicit {nr_iters} iterations lambda {lambda_small}'),loc=0)
 ax.axis('equal')
+
+plt.show()
 #%%
 # Implicit smoothing with both alpha and beta
 
@@ -79,14 +83,15 @@ ax.plot(smoothed_b[closed_ind,0],smoothed_b[closed_ind,1],'m')
 ax.legend((f'implicit alpha {alpha}', f'implicit beta {beta}'),loc=0)
 ax.axis('equal')
 
+plt.show()
+
 
 #%% SOLVING QUIZ 2021
 # Takes in X_noisy
 import numpy as np
 import matplotlib.pyplot as plt
 
-path = '../../../../Data/week1/curves/'
-X_noisy = np.loadtxt(path + 'dino_noisy.txt')
+X_noisy = np.loadtxt(os.path.join(path, 'dino_noisy.txt'))
 N = X_noisy.shape[0]
 closed_ind = np.r_[np.arange(N),0] # for easy plotting a closed snake
 
@@ -107,6 +112,8 @@ ax.plot(X_noisy[closed_ind,0], X_noisy[closed_ind,1],'r')
 ax.plot(X_solution[closed_ind,0], X_solution[closed_ind,1],'b--')
 ax.set_title(f'noisy:{curve_length(X_noisy):.5g}, smoothed:{curve_length(X_solution):.5g}')
 ax.axis('equal')
+
+plt.show()
 
 print(curve_length(X_solution))    
 #%%

@@ -7,6 +7,7 @@ Created on Wed Feb 26 23:31:24 2020
 """
 
 # optional exercise 1.1.4
+import os
 import skimage.io
 import numpy as np
 import scipy.ndimage
@@ -17,8 +18,9 @@ def total_variation(I):
     v = np.sum(abs(dx))+np.sum(abs(dy))
     return(v)
 
-path = '../../../../Data/week1/'
-I = skimage.io.imread(path + 'fibres_xcth.png')
+file_path = os.path.abspath(os.path.dirname(__file__))
+path = os.path.join(file_path, '..', 'Data', 'week1', 'fibres_xcth.png')
+I = skimage.io.imread(path)
 
 I = I.astype('float')/(2**16-1)
 I = I[300:700,300:700]
@@ -33,4 +35,4 @@ ax[0].set_title(f'total variation is {v}')
 ax[1].imshow(Is, cmap='gray')
 ax[1].set_title(f'total variation is {vs}')
 
-
+plt.show()

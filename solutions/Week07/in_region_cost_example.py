@@ -1,10 +1,13 @@
+import os
 import numpy as np 
 import matplotlib.pyplot as plt
 import skimage.io 
 import slgbuilder
 
 
-I = skimage.io.imread('../../../../Data/week7/peaks_image.png').astype(np.int32)
+file_path = os.path.abspath(os.path.dirname(__file__))
+filename = os.path.join(file_path, '..', 'Data', 'week7', 'peaks_image.png') # Replace with your own path
+I = skimage.io.imread(filename).astype(np.int32)
 
 fig, ax = plt.subplots(1,2)
 ax[0].imshow(I, cmap='gray')
@@ -35,4 +38,4 @@ for line in segmentation_lines:
     ax[1].plot(line, 'r')
 
 
-
+plt.show()

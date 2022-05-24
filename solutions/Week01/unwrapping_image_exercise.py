@@ -8,12 +8,15 @@ Created on Thu Feb 27 09:14:57 2020
 
 # optional exercise 1.1.5 
 
+import os
 import skimage.io
 import numpy as np
 import scipy.interpolate
 import matplotlib.pyplot as plt
 
-I = skimage.io.imread('../../../../Data/week1/dental/slice100.png')
+file_path = os.path.abspath(os.path.dirname(__file__))
+path = os.path.join(file_path, '..', 'Data', 'week1', 'dental', 'slice100.png')
+I = skimage.io.imread(path)
 
 
 a = 180 # number of angles for unfolding
@@ -33,3 +36,5 @@ U = U.reshape((r,a)).astype(np.uint8)
 fig, ax = plt.subplots(1,2)
 ax[0].imshow(I, cmap='gray')
 ax[1].imshow(U, cmap='gray')
+
+plt.show()

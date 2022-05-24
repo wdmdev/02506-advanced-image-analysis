@@ -60,7 +60,7 @@ Y = y.reshape((100,100,2))
 plt.imshow(Y[:,:,1])
 
 
-
+plt.show()
 
 
 

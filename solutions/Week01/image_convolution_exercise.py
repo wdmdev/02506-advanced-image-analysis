@@ -6,16 +6,17 @@ Created on Sat Jan 30 11:17:42 2021
 @author: abda
 """
 
+import os
 import numpy as np
 import scipy.ndimage
 import skimage.io
 import matplotlib.pyplot as plt
 
 #%% Read in image data
-data_path = '../../../../Data/week1/'
-im_name = 'fibres_xcth.png'
+file_path = os.path.abspath(os.path.dirname(__file__))
+path = os.path.join(file_path, '..', 'Data', 'week1', 'fibres_xcth.png')
 
-im = skimage.io.imread(data_path + im_name).astype(np.float)
+im = skimage.io.imread(path).astype(np.float)
 
 fig, ax = plt.subplots(1)
 ax.imshow(im)
@@ -65,15 +66,18 @@ fig, ax = plt.subplots(1)
 ax = plt.axes(projection='3d')
 ax.plot_surface(x, y, z,cmap='jet', edgecolor='none')
 
+plt.show()
+
 
 #%% 1.1 Verify the separability of the Gaussian kernel
 
 im_g_2d = scipy.ndimage.convolve(im, g2d)
 im_g_two_1d = scipy.ndimage.convolve(scipy.ndimage.convolve(im,g),g.T)
 
-
 fig, ax = plt.subplots(1)
 ax.imshow(im_g_2d-im_g_two_1d)
+
+plt.show()
 
 #%% 1.2 Derivative by Gaussian and central difference
 # Shows that the small derivative is going to give the same result whereas 
@@ -90,6 +94,7 @@ fig, ax = plt.subplots(1,2)
 ax[0].imshow(im_dx_g)
 ax[1].imshow(im_dx_c)
 
+plt.show()
 
 #%% 1.3 Large convolution of t = 20 equal to 10 convolutions of t = 2
 
@@ -108,11 +113,12 @@ im_2_times_10 = scipy.ndimage.convolve(scipy.ndimage.convolve(im,g2),g2.T)
 for i in range(1,10):
     im_2_times_10 = scipy.ndimage.convolve(scipy.ndimage.convolve(im_2_times_10,g2),g2.T)
 
-
 fig, ax = plt.subplots(1,3)
 ax[0].imshow(im_20)
 ax[1].imshow(im_2_times_10)
 ax[2].imshow(im_20-im_2_times_10)
+
+plt.show()
 
 #%% Large derivative with t = 20 compared to Gaussian and small derivative with t = 10
 
@@ -138,7 +144,4 @@ fig.colorbar(pos1, ax=ax[1], shrink=0.65)
 pos2 = ax[2].imshow(im_x_20-im_x_10_times_2)
 fig.colorbar(pos2, ax=ax[2], shrink=0.65)
 
-
-
-
-
+plt.show()

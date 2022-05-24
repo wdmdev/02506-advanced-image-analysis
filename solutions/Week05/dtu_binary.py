@@ -6,6 +6,7 @@ Created on Mon Mar  1 03:15:19 2021
 @author: vand
 """
 
+import os
 import skimage.io
 import matplotlib.pyplot as plt
 import maxflow
@@ -24,8 +25,9 @@ def segmentation_histogram(ax, I, S, edges=None):
 
 
 # noisy image
-path = '../../../../Data/week5/'
-I = skimage.io.imread(path + 'DTU_noisy.png').astype(float)/255
+file_path = os.path.abspath(os.path.dirname(__file__))
+path = os.path.join(file_path, '..', 'Data', 'week5') # Replace with your own path
+I = skimage.io.imread(os.path.join(path, 'DTU_noisy.png')).astype(float)/255
 
 # MRF parameters
 beta  = 0.1
@@ -51,3 +53,4 @@ segmentation_histogram(ax[2], I, S, edges=None)
 ax[2].set_aspect(1./ax[2].get_data_ratio())
 ax[2].set_title('Segmentation histogram')
 
+plt.show()

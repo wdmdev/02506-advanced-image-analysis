@@ -49,6 +49,8 @@ for i in range(5):
     segmentation = helper.what_segments(layer)
         
     segmentation_line = segmentation.shape[0] - np.argmax(segmentation[::-1,:], axis=0) - 1
+    print(segmentation_line.shape)
+    print(segmentation_line)
     cost = (I[segmentation_line, np.arange(segmentation.shape[1])]).sum()
     
     ax[i].imshow(I)

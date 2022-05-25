@@ -25,6 +25,7 @@ sift = cv2.SIFT_create()
 kp1, des1 = sift.detectAndCompute(im1,None)
 kp2, des2 = sift.detectAndCompute(im2,None)
 
+print(des1.shape)
 # BFMatcher with default params
 bf = cv2.BFMatcher()
 matches = bf.knnMatch(des1, des2, k=2)

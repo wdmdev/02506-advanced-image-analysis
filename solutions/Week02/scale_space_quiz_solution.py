@@ -55,7 +55,7 @@ def getGaussDerivative(t):
 
 im = skimage.io.imread(os.path.join(data_path, 'test_blob_varying.png')).astype(float)
 
-t = 4
+t = 16 
 g, dg, ddg, dddg = getGaussDerivative(t)
 
 r,c = im.shape
